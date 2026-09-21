@@ -1,0 +1,615 @@
+﻿{
+    "updatedAt":  "2026-09-21T21:03:40.367Z",
+    "createdAt":  "2026-09-11T11:11:30.555Z",
+    "id":  "9aBrGO47aaauJFf5",
+    "name":  "EduLead AI Automator",
+    "description":  null,
+    "active":  true,
+    "isArchived":  false,
+    "nodes":  [
+                  {
+                      "parameters":  {
+                                         "httpMethod":  "POST",
+                                         "path":  "edulead-receiver",
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "type":  "n8n-nodes-base.webhook",
+                      "typeVersion":  2,
+                      "position":  [
+                                       304,
+                                       256
+                                   ],
+                      "id":  "a69af2f4-26af-45c3-b5dd-97a6332aac3b",
+                      "name":  "Webhook",
+                      "webhookId":  "f2628059-9d5e-44c5-b680-df027ee337cc"
+                  },
+                  {
+                      "parameters":  {
+                                         "rules":  {
+                                                       "values":  [
+                                                                      {
+                                                                          "conditions":  {
+                                                                                             "options":  {
+                                                                                                             "caseSensitive":  true,
+                                                                                                             "leftValue":  "",
+                                                                                                             "typeValidation":  "strict",
+                                                                                                             "version":  1
+                                                                                                         },
+                                                                                             "conditions":  [
+                                                                                                                {
+                                                                                                                    "leftValue":  "",
+                                                                                                                    "rightValue":  "",
+                                                                                                                    "operator":  {
+                                                                                                                                     "type":  "string",
+                                                                                                                                     "operation":  "equals"
+                                                                                                                                 }
+                                                                                                                }
+                                                                                                            ],
+                                                                                             "combinator":  "and"
+                                                                                         }
+                                                                      }
+                                                                  ]
+                                                   },
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "type":  "n8n-nodes-base.switch",
+                      "typeVersion":  3,
+                      "position":  [
+                                       960,
+                                       432
+                                   ],
+                      "id":  "7b8cf7d4-ceeb-46a4-9a2b-123271d8a3e6",
+                      "name":  "Switch"
+                  },
+                  {
+                      "parameters":  {
+                                         "chatId":  "7207351271",
+                                         "text":  "=🚨 CẢNH BÁO LEAD HOT MỚI!\n\n👤 Họ tên: {{ $(\u0027Webhook\u0027).item.json.body.customer_name }}\n📞 Số điện thoại: {{ $(\u0027Webhook\u0027).item.json.body.phone_number }}\n🎯 Mục tiêu: {{ $(\u0027Webhook\u0027).item.json.body.target_score }} điểm\n💡 Nhu cầu: {{ $(\u0027Webhook\u0027).item.json.body.message }}",
+                                         "additionalFields":  {
+
+                                                              }
+                                     },
+                      "type":  "n8n-nodes-base.telegram",
+                      "typeVersion":  1.2,
+                      "position":  [
+                                       1200,
+                                       256
+                                   ],
+                      "id":  "f53d5a4d-bb0d-4959-a1f8-9048224344b6",
+                      "name":  "Send a text message",
+                      "webhookId":  "7627661c-b2f5-4453-bc11-a0483f517347",
+                      "executeOnce":  true,
+                      "credentials":  {
+                                          "telegramApi":  {
+                                                              "id":  "m6ostlP6BDcu7ufo",
+                                                              "name":  "Telegram account"
+                                                          }
+                                      }
+                  },
+                  {
+                      "parameters":  {
+                                         "modelId":  {
+                                                         "__rl":  true,
+                                                         "value":  "models/gemini-flash-lite-latest",
+                                                         "mode":  "list",
+                                                         "cachedResultName":  "models/gemini-flash-lite-latest"
+                                                     },
+                                         "messages":  {
+                                                          "values":  [
+                                                                         {
+                                                                             "content":  "=Hãy tóm tắt ngắn gọn nhu cầu của học viên sau trong 1 câu dưới 20 từ, không chào hỏi: {{ $json.body.message }}"
+                                                                         }
+                                                                     ]
+                                                      },
+                                         "builtInTools":  {
+
+                                                          },
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "type":  "@n8n/n8n-nodes-langchain.googleGemini",
+                      "typeVersion":  1.2,
+                      "position":  [
+                                       544,
+                                       256
+                                   ],
+                      "id":  "826695d3-e2f4-4a63-a617-43061f3b3543",
+                      "name":  "Message a model",
+                      "credentials":  {
+                                          "googlePalmApi":  {
+                                                                "id":  "Gg46WOhgrxVeLwyR",
+                                                                "name":  "Google Gemini(PaLM) Api account"
+                                                            }
+                                      }
+                  },
+                  {
+                      "parameters":  {
+                                         "operation":  "appendOrUpdate",
+                                         "documentId":  {
+                                                            "__rl":  true,
+                                                            "value":  "1_zWQRSQNJ7LJxUJUPF4F8jOq1Igt5Gt5NbBZF-9NMaE",
+                                                            "mode":  "list",
+                                                            "cachedResultName":  "EduLead_CRM",
+                                                            "cachedResultUrl":  "https://docs.google.com/spreadsheets/d/1_zWQRSQNJ7LJxUJUPF4F8jOq1Igt5Gt5NbBZF-9NMaE/edit?usp=drivesdk"
+                                                        },
+                                         "sheetName":  {
+                                                           "__rl":  true,
+                                                           "value":  "gid=0",
+                                                           "mode":  "list",
+                                                           "cachedResultName":  "Leads",
+                                                           "cachedResultUrl":  "https://docs.google.com/spreadsheets/d/1_zWQRSQNJ7LJxUJUPF4F8jOq1Igt5Gt5NbBZF-9NMaE/edit#gid=0"
+                                                       },
+                                         "columns":  {
+                                                         "mappingMode":  "defineBelow",
+                                                         "value":  {
+                                                                       "Full Name":  "=={{ $(\u0027Webhook\u0027).item.json.body.customer_name }}`",
+                                                                       "Phone":  "=={{ $(\u0027Webhook\u0027).item.json.body.phone_number }}`",
+                                                                       "Target Score":  "=={{ $(\u0027Webhook\u0027).item.json.body.target_score }}`",
+                                                                       "Qualification":  "=HOT",
+                                                                       "AI Summary":  "=={{ $(\u0027Message a model\u0027).item.json.content.parts[0].text }}"
+                                                                   },
+                                                         "matchingColumns":  [
+                                                                                 "Full Name"
+                                                                             ],
+                                                         "schema":  [
+                                                                        {
+                                                                            "id":  "Full Name",
+                                                                            "displayName":  "Full Name",
+                                                                            "required":  false,
+                                                                            "defaultMatch":  false,
+                                                                            "display":  true,
+                                                                            "type":  "string",
+                                                                            "canBeUsedToMatch":  true,
+                                                                            "removed":  false
+                                                                        },
+                                                                        {
+                                                                            "id":  "Phone",
+                                                                            "displayName":  "Phone",
+                                                                            "required":  false,
+                                                                            "defaultMatch":  false,
+                                                                            "display":  true,
+                                                                            "type":  "string",
+                                                                            "canBeUsedToMatch":  true
+                                                                        },
+                                                                        {
+                                                                            "id":  "Target Score",
+                                                                            "displayName":  "Target Score",
+                                                                            "required":  false,
+                                                                            "defaultMatch":  false,
+                                                                            "display":  true,
+                                                                            "type":  "string",
+                                                                            "canBeUsedToMatch":  true
+                                                                        },
+                                                                        {
+                                                                            "id":  "Qualification",
+                                                                            "displayName":  "Qualification",
+                                                                            "required":  false,
+                                                                            "defaultMatch":  false,
+                                                                            "display":  true,
+                                                                            "type":  "string",
+                                                                            "canBeUsedToMatch":  true
+                                                                        },
+                                                                        {
+                                                                            "id":  "AI Summary",
+                                                                            "displayName":  "AI Summary",
+                                                                            "required":  false,
+                                                                            "defaultMatch":  false,
+                                                                            "display":  true,
+                                                                            "type":  "string",
+                                                                            "canBeUsedToMatch":  true
+                                                                        }
+                                                                    ],
+                                                         "attemptToConvertTypes":  false,
+                                                         "convertFieldsToString":  false
+                                                     },
+                                         "options":  {
+                                                         "cellFormat":  "RAW"
+                                                     }
+                                     },
+                      "type":  "n8n-nodes-base.googleSheets",
+                      "typeVersion":  4.5,
+                      "position":  [
+                                       976,
+                                       112
+                                   ],
+                      "id":  "61fa1b46-92e8-488e-83b6-dd3fdd8e5bd8",
+                      "name":  "Append or update row in sheet",
+                      "credentials":  {
+                                          "googleSheetsOAuth2Api":  {
+                                                                        "id":  "IJvgSEqyOTTTbpwn",
+                                                                        "name":  "Google Sheets account"
+                                                                    }
+                                      }
+                  }
+              ],
+    "connections":  {
+                        "Switch":  {
+                                       "main":  [
+                                                    [
+                                                        {
+                                                            "node":  "Send a text message",
+                                                            "type":  "main",
+                                                            "index":  0
+                                                        }
+                                                    ]
+                                                ]
+                                   },
+                        "Webhook":  {
+                                        "main":  [
+                                                     [
+                                                         {
+                                                             "node":  "Message a model",
+                                                             "type":  "main",
+                                                             "index":  0
+                                                         }
+                                                     ]
+                                                 ]
+                                    },
+                        "Message a model":  {
+                                                "main":  [
+                                                             [
+                                                                 {
+                                                                     "node":  "Append or update row in sheet",
+                                                                     "type":  "main",
+                                                                     "index":  0
+                                                                 },
+                                                                 {
+                                                                     "node":  "Switch",
+                                                                     "type":  "main",
+                                                                     "index":  0
+                                                                 }
+                                                             ]
+                                                         ]
+                                            },
+                        "Append or update row in sheet":  {
+                                                              "main":  [
+                                                                           [
+
+                                                                           ]
+                                                                       ]
+                                                          }
+                    },
+    "settings":  {
+                     "executionOrder":  "v1",
+                     "binaryMode":  "separate"
+                 },
+    "staticData":  null,
+    "meta":  {
+                 "templateCredsSetupCompleted":  true
+             },
+    "pinData":  {
+
+                },
+    "versionId":  "0fa3129a-e673-4057-82aa-4843f72a75a0",
+    "activeVersionId":  "e8f4cad0-7918-4a6b-ae92-a5d32285a1d0",
+    "versionCounter":  82,
+    "triggerCount":  1,
+    "shared":  [
+                   {
+                       "updatedAt":  "2026-09-11T11:11:30.563Z",
+                       "createdAt":  "2026-09-11T11:11:30.563Z",
+                       "role":  "workflow:owner",
+                       "workflowId":  "9aBrGO47aaauJFf5",
+                       "projectId":  "wGzmJ9rGPEvRVKJJ",
+                       "project":  {
+                                       "updatedAt":  "2026-09-11T11:05:16.418Z",
+                                       "createdAt":  "2026-09-11T11:04:11.517Z",
+                                       "id":  "wGzmJ9rGPEvRVKJJ",
+                                       "name":  "Ton Bao \u003ctonthatbao020704@gmail.com\u003e",
+                                       "type":  "personal",
+                                       "icon":  null,
+                                       "description":  null,
+                                       "creatorId":  "dc582ce1-7029-4dcb-93ca-dc293c891e7c"
+                                   }
+                   }
+               ],
+    "tags":  [
+
+             ],
+    "activeVersion":  {
+                          "updatedAt":  "2026-09-21T20:35:45.000Z",
+                          "createdAt":  "2026-09-17T15:53:04.130Z",
+                          "versionId":  "e8f4cad0-7918-4a6b-ae92-a5d32285a1d0",
+                          "workflowId":  "9aBrGO47aaauJFf5",
+                          "nodes":  [
+                                        {
+                                            "parameters":  {
+                                                               "httpMethod":  "POST",
+                                                               "path":  "edulead-receiver",
+                                                               "options":  {
+
+                                                                           }
+                                                           },
+                                            "type":  "n8n-nodes-base.webhook",
+                                            "typeVersion":  2,
+                                            "position":  [
+                                                             304,
+                                                             256
+                                                         ],
+                                            "id":  "a69af2f4-26af-45c3-b5dd-97a6332aac3b",
+                                            "name":  "Webhook",
+                                            "webhookId":  "f2628059-9d5e-44c5-b680-df027ee337cc"
+                                        },
+                                        {
+                                            "parameters":  {
+                                                               "rules":  {
+                                                                             "values":  [
+                                                                                            {
+                                                                                                "conditions":  {
+                                                                                                                   "options":  {
+                                                                                                                                   "caseSensitive":  true,
+                                                                                                                                   "leftValue":  "",
+                                                                                                                                   "typeValidation":  "strict",
+                                                                                                                                   "version":  1
+                                                                                                                               },
+                                                                                                                   "conditions":  [
+                                                                                                                                      {
+                                                                                                                                          "leftValue":  "",
+                                                                                                                                          "rightValue":  "",
+                                                                                                                                          "operator":  "@{type=string; operation=equals}"
+                                                                                                                                      }
+                                                                                                                                  ],
+                                                                                                                   "combinator":  "and"
+                                                                                                               }
+                                                                                            }
+                                                                                        ]
+                                                                         },
+                                                               "options":  {
+
+                                                                           }
+                                                           },
+                                            "type":  "n8n-nodes-base.switch",
+                                            "typeVersion":  3,
+                                            "position":  [
+                                                             960,
+                                                             432
+                                                         ],
+                                            "id":  "7b8cf7d4-ceeb-46a4-9a2b-123271d8a3e6",
+                                            "name":  "Switch"
+                                        },
+                                        {
+                                            "parameters":  {
+                                                               "chatId":  "7207351271",
+                                                               "text":  "==🚨 CẢNH BÁO LEAD HOT MỚI!\n\n👤 Họ tên: {{ $(\u0027Webhook\u0027).item.json.body.customer_name }}\n📞 Số điện thoại: {{ $(\u0027Webhook\u0027).item.json.body.phone_number }}\n🎯 Mục tiêu: {{ $(\u0027Webhook\u0027).item.json.body.target_score }} điểm\n💡 Nhu cầu: {{ $(\u0027Webhook\u0027).item.json.body.requirement }}",
+                                                               "additionalFields":  {
+
+                                                                                    }
+                                                           },
+                                            "type":  "n8n-nodes-base.telegram",
+                                            "typeVersion":  1.2,
+                                            "position":  [
+                                                             1200,
+                                                             256
+                                                         ],
+                                            "id":  "f53d5a4d-bb0d-4959-a1f8-9048224344b6",
+                                            "name":  "Send a text message",
+                                            "webhookId":  "7627661c-b2f5-4453-bc11-a0483f517347",
+                                            "executeOnce":  true,
+                                            "credentials":  {
+                                                                "telegramApi":  {
+                                                                                    "id":  "m6ostlP6BDcu7ufo",
+                                                                                    "name":  "Telegram account"
+                                                                                }
+                                                            }
+                                        },
+                                        {
+                                            "parameters":  {
+                                                               "modelId":  {
+                                                                               "__rl":  true,
+                                                                               "value":  "models/gemini-flash-lite-latest",
+                                                                               "mode":  "list",
+                                                                               "cachedResultName":  "models/gemini-flash-lite-latest"
+                                                                           },
+                                                               "messages":  {
+                                                                                "values":  [
+                                                                                               {
+                                                                                                   "content":  "={{ $json.body.customer_name }} - SĐT: {{ $json.body.phone_number }} - Mục tiêu: {{ $json.body.target_score }}"
+                                                                                               }
+                                                                                           ]
+                                                                            },
+                                                               "builtInTools":  {
+
+                                                                                },
+                                                               "options":  {
+
+                                                                           }
+                                                           },
+                                            "type":  "@n8n/n8n-nodes-langchain.googleGemini",
+                                            "typeVersion":  1.2,
+                                            "position":  [
+                                                             544,
+                                                             256
+                                                         ],
+                                            "id":  "826695d3-e2f4-4a63-a617-43061f3b3543",
+                                            "name":  "Message a model",
+                                            "credentials":  {
+                                                                "googlePalmApi":  {
+                                                                                      "id":  "Gg46WOhgrxVeLwyR",
+                                                                                      "name":  "Google Gemini(PaLM) Api account"
+                                                                                  }
+                                                            }
+                                        },
+                                        {
+                                            "parameters":  {
+                                                               "operation":  "appendOrUpdate",
+                                                               "documentId":  {
+                                                                                  "__rl":  true,
+                                                                                  "value":  "1_zWQRSQNJ7LJxUJUPF4F8jOq1Igt5Gt5NbBZF-9NMaE",
+                                                                                  "mode":  "list",
+                                                                                  "cachedResultName":  "EduLead_CRM",
+                                                                                  "cachedResultUrl":  "https://docs.google.com/spreadsheets/d/1_zWQRSQNJ7LJxUJUPF4F8jOq1Igt5Gt5NbBZF-9NMaE/edit?usp=drivesdk"
+                                                                              },
+                                                               "sheetName":  {
+                                                                                 "__rl":  true,
+                                                                                 "value":  "gid=0",
+                                                                                 "mode":  "list",
+                                                                                 "cachedResultName":  "Leads",
+                                                                                 "cachedResultUrl":  "https://docs.google.com/spreadsheets/d/1_zWQRSQNJ7LJxUJUPF4F8jOq1Igt5Gt5NbBZF-9NMaE/edit#gid=0"
+                                                                             },
+                                                               "columns":  {
+                                                                               "mappingMode":  "defineBelow",
+                                                                               "value":  {
+                                                                                             "Full Name":  "=={{ $(\u0027Webhook\u0027).item.json.body.customer_name }}`",
+                                                                                             "Phone":  "=={{ $(\u0027Webhook\u0027).item.json.body.phone_number }}`",
+                                                                                             "Target Score":  "=={{ $(\u0027Webhook\u0027).item.json.body.target_score }}`",
+                                                                                             "Qualification":  "=HOT",
+                                                                                             "AI Summary":  "=={{ $(\u0027Webhook\u0027).item.json.body.requirement }}`"
+                                                                                         },
+                                                                               "matchingColumns":  [
+                                                                                                       "Full Name"
+                                                                                                   ],
+                                                                               "schema":  [
+                                                                                              {
+                                                                                                  "id":  "Full Name",
+                                                                                                  "displayName":  "Full Name",
+                                                                                                  "required":  false,
+                                                                                                  "defaultMatch":  false,
+                                                                                                  "display":  true,
+                                                                                                  "type":  "string",
+                                                                                                  "canBeUsedToMatch":  true,
+                                                                                                  "removed":  false
+                                                                                              },
+                                                                                              {
+                                                                                                  "id":  "Phone",
+                                                                                                  "displayName":  "Phone",
+                                                                                                  "required":  false,
+                                                                                                  "defaultMatch":  false,
+                                                                                                  "display":  true,
+                                                                                                  "type":  "string",
+                                                                                                  "canBeUsedToMatch":  true
+                                                                                              },
+                                                                                              {
+                                                                                                  "id":  "Target Score",
+                                                                                                  "displayName":  "Target Score",
+                                                                                                  "required":  false,
+                                                                                                  "defaultMatch":  false,
+                                                                                                  "display":  true,
+                                                                                                  "type":  "string",
+                                                                                                  "canBeUsedToMatch":  true
+                                                                                              },
+                                                                                              {
+                                                                                                  "id":  "Qualification",
+                                                                                                  "displayName":  "Qualification",
+                                                                                                  "required":  false,
+                                                                                                  "defaultMatch":  false,
+                                                                                                  "display":  true,
+                                                                                                  "type":  "string",
+                                                                                                  "canBeUsedToMatch":  true
+                                                                                              },
+                                                                                              {
+                                                                                                  "id":  "AI Summary",
+                                                                                                  "displayName":  "AI Summary",
+                                                                                                  "required":  false,
+                                                                                                  "defaultMatch":  false,
+                                                                                                  "display":  true,
+                                                                                                  "type":  "string",
+                                                                                                  "canBeUsedToMatch":  true
+                                                                                              }
+                                                                                          ],
+                                                                               "attemptToConvertTypes":  false,
+                                                                               "convertFieldsToString":  false
+                                                                           },
+                                                               "options":  {
+
+                                                                           }
+                                                           },
+                                            "type":  "n8n-nodes-base.googleSheets",
+                                            "typeVersion":  4.5,
+                                            "position":  [
+                                                             976,
+                                                             112
+                                                         ],
+                                            "id":  "61fa1b46-92e8-488e-83b6-dd3fdd8e5bd8",
+                                            "name":  "Append or update row in sheet",
+                                            "credentials":  {
+                                                                "googleSheetsOAuth2Api":  {
+                                                                                              "id":  "IJvgSEqyOTTTbpwn",
+                                                                                              "name":  "Google Sheets account"
+                                                                                          }
+                                                            }
+                                        }
+                                    ],
+                          "connections":  {
+                                              "Switch":  {
+                                                             "main":  [
+                                                                          [
+                                                                              {
+                                                                                  "node":  "Send a text message",
+                                                                                  "type":  "main",
+                                                                                  "index":  0
+                                                                              }
+                                                                          ]
+                                                                      ]
+                                                         },
+                                              "Webhook":  {
+                                                              "main":  [
+                                                                           [
+                                                                               {
+                                                                                   "node":  "Message a model",
+                                                                                   "type":  "main",
+                                                                                   "index":  0
+                                                                               }
+                                                                           ]
+                                                                       ]
+                                                          },
+                                              "Message a model":  {
+                                                                      "main":  [
+                                                                                   [
+                                                                                       {
+                                                                                           "node":  "Append or update row in sheet",
+                                                                                           "type":  "main",
+                                                                                           "index":  0
+                                                                                       },
+                                                                                       {
+                                                                                           "node":  "Switch",
+                                                                                           "type":  "main",
+                                                                                           "index":  0
+                                                                                       }
+                                                                                   ]
+                                                                               ]
+                                                                  },
+                                              "Append or update row in sheet":  {
+                                                                                    "main":  [
+                                                                                                 [
+
+                                                                                                 ]
+                                                                                             ]
+                                                                                }
+                                          },
+                          "authors":  "Ton Bao",
+                          "name":  "Version e8f4cad0",
+                          "description":  "",
+                          "autosaved":  true,
+                          "workflowPublishHistory":  [
+                                                         {
+                                                             "createdAt":  "2026-09-21T17:56:42.898Z",
+                                                             "id":  7,
+                                                             "workflowId":  "9aBrGO47aaauJFf5",
+                                                             "versionId":  "e8f4cad0-7918-4a6b-ae92-a5d32285a1d0",
+                                                             "event":  "activated",
+                                                             "userId":  "dc582ce1-7029-4dcb-93ca-dc293c891e7c"
+                                                         },
+                                                         {
+                                                             "createdAt":  "2026-09-21T20:35:45.888Z",
+                                                             "id":  9,
+                                                             "workflowId":  "9aBrGO47aaauJFf5",
+                                                             "versionId":  "e8f4cad0-7918-4a6b-ae92-a5d32285a1d0",
+                                                             "event":  "activated",
+                                                             "userId":  "dc582ce1-7029-4dcb-93ca-dc293c891e7c"
+                                                         },
+                                                         {
+                                                             "createdAt":  "2026-09-21T20:35:42.227Z",
+                                                             "id":  8,
+                                                             "workflowId":  "9aBrGO47aaauJFf5",
+                                                             "versionId":  "e8f4cad0-7918-4a6b-ae92-a5d32285a1d0",
+                                                             "event":  "deactivated",
+                                                             "userId":  "dc582ce1-7029-4dcb-93ca-dc293c891e7c"
+                                                         }
+                                                     ]
+                      }
+}
